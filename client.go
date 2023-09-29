@@ -79,6 +79,11 @@ func (c *Client) newRequest(ctx context.Context, method, url string, setters ...
 		return nil, err
 	}
 	c.setCommonHeaders(req)
+
+	if c.config.PreRequestHook != nil {
+		c.config.PreRequestHook(ctx, req)
+	}
+
 	return req, nil
 }
 
